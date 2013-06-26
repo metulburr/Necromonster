@@ -2,12 +2,16 @@ import pathfind
 from os import listdir
 from pygame.image import load
 from pygame.rect import Rect
+import os
 
 class Monster():
     def __init__(self, game):
+        self.game = game
+        self.path = os.path.join('rec', 'enemy')
+        self.path2 = os.path.join(self.game.main_path, self.path)
         self.monsters = []
         self.monster_rects = []
-        self.game = game
+        
 
     def getStats(self, difficulty):
         # stat format [level, health, attack, defense]
@@ -21,8 +25,9 @@ class Monster():
 
     def loadFrames(self, name):
         frames = {}
-        for fi in listdir(self.game.main_path + '\\rec\\enemy\\%s' % name):
-            frames[fi] = load(self.game.main_path + '\\rec\\enemy\\%s\\%s' % (name, fi)).convert_alpha()
+        for fi in listdir(os.path.join(self.path2, '{}'.format(name))):
+            #frames[fi] = load(self.game.main_path + '\\rec\\enemy\\%s\\%s'.format(name, fi)).convert_alpha()
+            frames[fi] = load(os.path.join(self.path2, os.path.join('{}'.format(name), '{}'.format(fi)))).convert_alpha()   #'.format(name, fi)).convert_alpha()
         return frames
 
 

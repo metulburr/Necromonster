@@ -4,8 +4,11 @@ from pygame.rect import Rect
 class Player():
     def __init__(self, game):
         self.game = game
-        self.player = pygame.image.load('rec\\char\\back1.png')
-        self.head_font = pygame.font.Font('rec\\font\\p_head.ttf', 15)
+        character_path = os.path.join('rec', 'char')
+        font_path = os.path.join('rec', 'font')
+        
+        self.player = pygame.image.load(os.path.join(character_path, 'back1.png'))
+        self.head_font = pygame.font.Font(os.path.join(font_path, 'p_head.ttf'), 15)
         self.player_face = 'back'  # this is the part of the player that you see
         self.player_state = 1.
         self.head_drawn = 0
@@ -13,9 +16,16 @@ class Player():
         self.player_dims = self.player.get_size()
 
         self.player_frames = {}
-        for fi in os.listdir(self.game.main_path + '\\rec\\char'):
-            self.player_frames[fi] = pygame.image.load(self.game.main_path + '\\rec\\char\\' + fi).convert_alpha()
-
+        path = os.path.join(self.game.main_path, character_path)
+        for fi in os.listdir(os.path.join(self.game.main_path, character_path)):
+            self.player_frames[fi] = pygame.image.load(os.path.join(path,  fi)).convert_alpha()
+        '''thisdir = os.path.dirname(os.path.realpath(__file__))
+        path = [thisdir, 'rec', 'char']
+        newpath = os.path.sep.join(path)
+        for image in os.listdir(newpath):
+            self.player_frames[image] = pygame.load.image(newpath).convert_alpha()
+        '''
+        
         self.player_r.x = 450
         self.player_r.y = 528
 
@@ -97,7 +107,7 @@ class Player():
         return [self.player_r.x + offset[0], self.player_r.y + offset[1]]
 
     def setFace(self, face, state=1):
-        self.player_face = pygame.image.load('rec/char/%s%s.png' % (face, state))
+        self.player_face = pygame.image.load('rec/char/{}{}.png'.format(face, state))
 
     def blitPlayer(self):
         #Draws player and head text if it exists

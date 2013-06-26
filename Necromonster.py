@@ -13,7 +13,10 @@ class Necro():
     def __init__(self):
         #window setup
         pygame.display.set_caption('Necromonster')
-        pygame.display.set_icon(pygame.image.load('rec\\misc\\icon.png'))
+        path = ['rec', 'misc', 'icon.png']
+        os.path.sep.join(path)
+        pygame.display.set_icon(pygame.image.load(os.path.sep.join(path)))
+        #pygame.display.set_icon(pygame.image.load('rec\\misc\\icon.png'))
         self.main_path = os.getcwd()
 
         # initiate the clock and screen
